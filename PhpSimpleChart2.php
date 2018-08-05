@@ -8,16 +8,11 @@
 
 function draw_line_chart($my_array,$date_array,$chart_header,$xscale,$yscale,$y_title)
 {
-//print_r($my_array);
-//print"</br>";
-//print_r($date_array);
-
 
 $array_max=max($my_array);
 $array_min=min($my_array);
 $array_range = $array_max -$array_min;
 $array_count = count($my_array);
-//$highest_array_value=$my_array[$array_count-1];
 
 if($array_count>10){$date_interval=intval($array_count/5);}else{$date_interval=1;}
 
@@ -28,7 +23,6 @@ $total_yheight=$yscale+$xmargin;
 $ymagnify=intval(($yscale/$array_max))-2;
 $start_x=$xmargin/2;
 $x_interval = intval($xscale/$array_count)-1;
-
 
 echo"<h1>".$chart_header."</h1>";
 PRINT <<< END
@@ -56,6 +50,7 @@ ctx.restore();
 ctx.moveTo(0,$yscale);
 ctx.lineTo($total_xwidth,$yscale);
 //print x-axis line//
+
 END;
 
 foreach($my_array as $key => $item) {

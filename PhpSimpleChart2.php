@@ -123,7 +123,7 @@ $prev_item=$show_item;
 
 $line_spacing=intval($array_max/25)+1;
 
-for ($j = 0; $j <= $array_max+2; $j++) {
+for ($j = 0; $j <= $array_max+1; $j++) {
 
 PRINT <<< END
 ctx.font = "bold 14px verdana, sans-serif";

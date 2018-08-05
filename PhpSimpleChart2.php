@@ -1,6 +1,5 @@
 
 <?php
-
 //simple chart function
 //Creator Seamus Kane
 //The creator accepts no liability for usage of this function
@@ -26,11 +25,11 @@ $xmargin=$xscale/10;
 $total_xwidth=$xscale+$xmargin;
 $total_yheight=$yscale+$xmargin;
 $ymagnify=intval(($yscale/$array_max))-2;
+
 $start_x=$xmargin/2;
 $x_interval = intval($xscale/$array_count)-1;
+$start_y=$start_x;
 
-
-echo"<h1>".$chart_header."</h1>";
 PRINT <<< END
 <canvas id="myCanvas" width="$total_xwidth" height="$total_yheight" style="border:1px solid #d3d3d3;">
 Your browser does not support the HTML5 canvas tag.</canvas>
@@ -41,21 +40,33 @@ var ctx = c.getContext("2d");
 ctx.font = "bold 12px verdana, sans-serif";
 ctx.fillStyle= 'red';
 
+//print chart header
+ctx.save();
+ctx.font = "bold 24px verdana, sans-serif";
+ctx.fillStyle= 'green';
+ctx.fillText("$chart_header",$total_xwidth/2,20);
+ctx.restore();
+//print chart header
+
+
 //print y-axis title
 ctx.save();
 ctx.font = "bold 24px verdana, sans-serif";
 ctx.fillStyle= 'black';
-ctx.translate( $x_interval/2, 0 );
+ctx.translate( $x_interval/2, $start_y);
 ctx.rotate( Math.PI / 2 );
 ctx.fillText("$y_title",$x_interval/2,0);
 ctx.restore();
 //print y-axis title
 
 
-//print x-axis line
-ctx.moveTo(0,$yscale);
-ctx.lineTo($total_xwidth,$yscale);
-//print x-axis line//
+//print x-axis lines
+ctx.moveTo(0,$yscale+$start_y);
+ctx.lineTo($total_xwidth,$yscale+$start_y);
+ctx.moveTo(0,$start_y);
+ctx.lineTo($total_xwidth,$start_y);
+//print x-axis lines
+
 END;
 
 foreach($my_array as $key => $item) {
@@ -75,8 +86,8 @@ if($key>0)
         ctx.font = "bold 12px verdana, sans-serif";
         ctx.fillStyle= 'blue';
 //plot graph lines
-ctx.moveTo($xcord+$start_x ,$yscale-$prev_item);
-ctx.lineTo($xcord+$x_interval+$start_x,$yscale-$show_item);
+ctx.moveTo($xcord+$start_x ,$yscale-$prev_item+$start_y);
+ctx.lineTo($xcord+$x_interval+$start_x,$yscale-$show_item+$start_y);
 //plot graph lines
 }
 ctx.stroke();
@@ -87,7 +98,7 @@ ctx.stroke();
 	if ($prev_item!=$show_item)
 	{
 
-        ctx.fillText("$item",$xcord+$x_interval+$start_x,$yscale-$show_item+$txt_offset);
+        ctx.fillText("$item",$xcord+$x_interval+$start_x,$yscale-$show_item+$txt_offset+$start_y);
 	}
         ctx.stroke();
 
@@ -96,11 +107,14 @@ ctx.stroke();
 
 	if  (($key % $date_interval == 0) || $key >= $array_count-1)
 	{
-        ctx.fillText("$pieces[1]",$xcord+$x_interval+$start_x,$yscale+15);
-        ctx.fillText("$pieces[0]",$xcord+$x_interval+$start_x,$yscale+25);
-
-	ctx.moveTo($xcord+$x_interval+$start_x,0);
-	ctx.lineTo($xcord+$x_interval+$start_x,$yscale);
+	// print date / time
+        ctx.fillText("$pieces[1]",$xcord+$x_interval+$start_x,$yscale+15+$start_y);
+        ctx.fillText("$pieces[0]",$xcord+$x_interval+$start_x,$yscale+25+$start_y);
+	//print date / time 
+	// print horizontal lines
+	ctx.moveTo($xcord+$x_interval+$start_x,$start_y);
+	ctx.lineTo($xcord+$x_interval+$start_x,$yscale+$start_y);
+	// print horizontal lines
 	}
 
 END;
@@ -118,9 +132,10 @@ ctx.setLineDash([1, 2]);
 
 if($j  %  $line_spacing == 0)
 {
-ctx.moveTo($x_interval+$start_x,$yscale-($j*$ymagnify));
-ctx.lineTo($xscale,$yscale-($j*$ymagnify));
-ctx.fillText("$j",$x_interval+$start_x-25,$yscale-($j*$ymagnify));
+ctx.moveTo($x_interval+$start_x,$yscale-($j*$ymagnify)+$start_y);
+ctx.lineTo($xscale,$yscale-($j*$ymagnify)+$start_y);
+ctx.fillText("$j",$x_interval+$start_x-25,$yscale-($j*$ymagnify)+$start_y);
+
 }
 
 END;

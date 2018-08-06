@@ -111,10 +111,10 @@ ctx.stroke();
         ctx.fillText("$pieces[1]",$xcord+$x_interval+$start_x,$yscale+15+$start_y);
         ctx.fillText("$pieces[0]",$xcord+$x_interval+$start_x,$yscale+25+$start_y);
 	//print date / time 
-	// print horizontal lines
+	// print vertical lines
 	ctx.moveTo($xcord+$x_interval+$start_x,$start_y);
 	ctx.lineTo($xcord+$x_interval+$start_x,$yscale+$start_y);
-	// print horizontal lines
+	// print vertical lines
 	}
 
 END;
@@ -132,8 +132,11 @@ ctx.setLineDash([1, 2]);
 
 if($j  %  $line_spacing == 0)
 {
+// print horizontal lines
 ctx.moveTo($x_interval+$start_x,$yscale-($j*$ymagnify)+$start_y);
 ctx.lineTo($xscale,$yscale-($j*$ymagnify)+$start_y);
+// print horizontal lines
+
 ctx.fillText("$j",$x_interval+$start_x-25,$yscale-($j*$ymagnify)+$start_y);
 
 }

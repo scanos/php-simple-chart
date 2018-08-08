@@ -148,7 +148,8 @@ END;
 
 PRINT <<< END
 ctx.stroke();
-ctx.drawImage(image1, 0, 0, 400, 1000);
+ctx.drawImage(image1, 0, 0, $total_yheight, $total_xwidth);
+
 </script>
 END;
 
